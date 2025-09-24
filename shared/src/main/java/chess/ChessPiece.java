@@ -91,7 +91,7 @@ public class ChessPiece {
         int row = endPosition.getRow();
         int col = endPosition.getColumn();
 
-        if (1<row && row<8 && 1<col && col<8 ) {
+        if (1<=row && row<=8 && 1<=col && col<=8 ) {
             ChessPiece piece = board.getPiece(endPosition);
             if (piece == null) {
                 return true;
@@ -128,9 +128,24 @@ public class ChessPiece {
 
     public HashSet<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> moves = new HashSet<>();
+        HashSet<ChessMove> possibleMoves = new HashSet<>();
         int row = myPosition.getRow();
         int col = myPosition.getColumn();
 
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+2, col-1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+2, col+1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-2, col+1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-2, col-1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+1, col+2), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-1, col+2), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+1, col-2), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-1, col-2), null));
+
+        for (ChessMove m : possibleMoves) {
+            if (checkMove(board, myPosition, m.getEndPosition())) {
+                moves.add(m);
+            }
+        }
         return moves;
     }
 
