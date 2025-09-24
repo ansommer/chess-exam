@@ -28,6 +28,11 @@ public class ChessMove {
         return Objects.hash(startPosition, endPosition, promotionPiece);
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s", startPosition, endPosition, promotionPiece);
+    }
+
     public ChessMove(ChessPosition startPosition, ChessPosition endPosition,
                      ChessPiece.PieceType promotionPiece) {
         this.startPosition = startPosition;
