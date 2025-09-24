@@ -2,6 +2,7 @@ package chess;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.HashSet;
 
 /**
  * Represents a single chess piece
@@ -67,6 +68,94 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        throw new RuntimeException("Not implemented");
+        Collection<ChessMove> moves = new HashSet<ChessMove>();
+        if (getPieceType() == PieceType.KING) {
+            moves = kingMoves(board, myPosition);
+        } else if (getPieceType() == PieceType.QUEEN) {
+            moves = bishopMoves(board, myPosition);
+            HashSet<ChessMove> rookMoves = rookMoves(board, myPosition);
+            moves.addAll(rookMoves);
+        } else if (getPieceType() ==  PieceType.BISHOP) {
+            moves = bishopMoves(board, myPosition);
+        } else if (getPieceType() == PieceType.ROOK) {
+            moves = rookMoves(board, myPosition);
+        } else if (getPieceType() == PieceType.KNIGHT) {
+            moves =  knightMoves(board, myPosition);
+        } else if (getPieceType() == PieceType.PAWN) {
+            moves = pawnMoves(board, myPosition);
+        }
+        return moves;
     }
+
+    public boolean checkMove(ChessBoard board, ChessPosition myPosition, ChessPosition endPosition) {
+        int row = endPosition.getRow();
+        int col = endPosition.getColumn();
+
+        if (1<row && row<8 && 1<col && col<8 ) {
+            ChessPiece piece = board.getPiece(endPosition);
+            if (piece == null) {
+                return true;
+            } else if (piece.getTeamColor() != pieceColor) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public HashSet<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition) {
+        HashSet<ChessMove> moves = new HashSet<>();
+        HashSet<ChessMove> possibleMoves = new HashSet<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
+
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+1, col-1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+1, col), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row+1, col+1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row, col-1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row, col+1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-1, col-1), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-1, col), null));
+        possibleMoves.add(new ChessMove(myPosition, new ChessPosition(row-1, col+1), null));
+
+        for (ChessMove m : possibleMoves) {
+            if (checkMove(board, myPosition, m.getEndPosition())) {
+                moves.add(m);
+            }
+        }
+
+        return moves;
+    }
+
+    public HashSet<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition) {
+        HashSet<ChessMove> moves = new HashSet<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
+
+        return moves;
+    }
+
+    public HashSet<ChessMove> rookMoves(ChessBoard board, ChessPosition myPosition) {
+        HashSet<ChessMove> moves = new HashSet<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
+
+        return moves;
+    }
+
+    public HashSet<ChessMove> bishopMoves(ChessBoard board, ChessPosition myPosition) {
+        HashSet<ChessMove> moves = new HashSet<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
+
+        return moves;
+    }
+
+    public HashSet<ChessMove> pawnMoves(ChessBoard board, ChessPosition myPosition) {
+        HashSet<ChessMove> moves = new HashSet<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
+
+        return moves;
+    }
+
 }
