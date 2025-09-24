@@ -165,6 +165,43 @@ public class ChessPiece {
         int row = myPosition.getRow();
         int col = myPosition.getColumn();
 
+        while (row<=8) {
+            row++;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (row>0) {
+            row--;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (col>0) {
+            col--;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (col<=8) {
+            col++;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
         return moves;
     }
 
