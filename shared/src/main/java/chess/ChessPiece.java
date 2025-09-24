@@ -102,6 +102,17 @@ public class ChessPiece {
         return false;
     }
 
+    public boolean hasPiece(ChessBoard board, ChessPosition position, int row, int col ) {
+        if (1<=row && row<=8 && 1<=col && col<=8 ) {
+            ChessPiece piece = board.getPiece(position);
+            if (piece == null) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public HashSet<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition) {
         HashSet<ChessMove> moves = new HashSet<>();
         HashSet<ChessMove> possibleMoves = new HashSet<>();
@@ -162,6 +173,47 @@ public class ChessPiece {
         int row = myPosition.getRow();
         int col = myPosition.getColumn();
 
+        while (row<=8 && col<=8) {
+            row++;
+            col++;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (row>0 && col<=8) {
+            row--;
+            col++;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (row<=8 && col>0) {
+            row++;
+            col--;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
+        row = myPosition.getRow();
+        col = myPosition.getColumn();
+
+        while (row>0 && col>0) {
+            row--;
+            col--;
+            if (checkMove(board, myPosition, new ChessPosition(row, col))) {
+                moves.add(new ChessMove(myPosition, new ChessPosition(row, col), null));
+            }
+            if (hasPiece(board, new ChessPosition(row, col), row, col)) {break;}
+        }
         return moves;
     }
 
